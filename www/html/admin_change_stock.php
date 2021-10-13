@@ -34,6 +34,11 @@ $item_id = get_post('item_id');
 //stockを取得
 $stock = get_post('stock');
 
+//CSRF 対策
+$token = get_post('token');
+if(is_valid_csrf_token($token) !== true) {
+  redirect_to(LOOUT_URL);
+}
 
 if(update_item_stock($db, $item_id, $stock)){
   set_message('在庫数を変更しました。');
