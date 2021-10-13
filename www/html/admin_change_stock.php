@@ -37,7 +37,7 @@ $stock = get_post('stock');
 //CSRF 対策
 $token = get_post('token');
 if(is_valid_csrf_token($token) !== true) {
-  redirect_to(LOOUT_URL);
+  redirect_to(LOGOUT_URL);
 }
 
 if(update_item_stock($db, $item_id, $stock)){
