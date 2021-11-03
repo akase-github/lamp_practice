@@ -36,9 +36,14 @@ $stock = get_post('stock');
 
 //CSRF 対策
 $token = get_post('token');
-if(is_valid_csrf_token($token) !== true) {
-  redirect_to(LOGOUT_URL);
+set_message(get_session('csrf_token'));
+set_message(get_post('token'));
+if (is_valid_csrf_token($token)) {
+  set_message('一致');
+} else {
+  set_message('不一致');
 }
+
 
 if(update_item_stock($db, $item_id, $stock)){
   set_message('在庫数を変更しました。');

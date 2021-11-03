@@ -34,12 +34,6 @@ $item_id = get_post('item_id');
 //POSTで送られた値を代入
 $changes_to = get_post('changes_to');
 
-//CSRF 対策
-$token = get_post('token');
-if(is_valid_csrf_token($token) !== true) {
-  redirect_to(LOGIN_URL);
-}
-
 //変数の値をチェック
 if($changes_to === 'open'){
   //アイテムの公開設定を変更
