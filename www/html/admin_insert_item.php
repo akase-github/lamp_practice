@@ -18,6 +18,12 @@ if(is_admin($user) === false){
   redirect_to(LOGIN_URL);
 }
 
+//CSRF 対策
+$get_token = get_post('token');
+if (is_valid_csrf_token($get_token) === false) {
+  redirect_to(LOGIN_URL);
+}
+
 $name = get_post('name');
 $price = get_post('price');
 $status = get_post('status');

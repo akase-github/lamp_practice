@@ -10,6 +10,12 @@ if(is_logined() === false){
   redirect_to(LOGIN_URL);
 }
 
+//CSRF 対策
+$get_token = get_post('token');
+if (is_valid_csrf_token($get_token) === false) {
+  redirect_to(LOGIN_URL);
+}
+
 $db = get_db_connect();
 
 $user = get_login_user($db);
