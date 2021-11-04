@@ -17,6 +17,12 @@ if(is_logined() === false){
   redirect_to(LOGIN_URL);
 }
 
+//CSRF 対策
+$get_token = get_post('token');
+if (is_valid_csrf_token($get_token) === false) {
+  redirect_to(LOGIN_URL);
+}
+
 //PDOを取得
 $db = get_db_connect();
 
@@ -33,7 +39,6 @@ if(is_admin($user) === false){
 $item_id = get_post('item_id');
 //stockを取得
 $stock = get_post('stock');
-
 
 if(update_item_stock($db, $item_id, $stock)){
   set_message('在庫数を変更しました。');
