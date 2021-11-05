@@ -8,5 +8,6 @@ CREATE TABLE orders (
 CREATE TABLE order_details (
     order_id INT,
     item_id INT,
+    price INT,
     amount INT
 );
