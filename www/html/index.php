@@ -15,7 +15,18 @@ $user = get_login_user($db);
 
 $sort = get_get('sort');
 
-$items = get_open_items($db,$sort);
+$count_items = count_items($db)['COUNT(*)'];
+$total_page = ceil($count_items / 8);
+
+if(get_get('page') ===''){
+  $page = 1;
+  $items = get_open_items($db,$sort,$page);
+}else{
+  $page = get_get('page');
+  $items = get_open_items($db,$sort,$page);
+}
+
+
 
 $token = get_csrf_token();
 

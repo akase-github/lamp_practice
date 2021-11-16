@@ -5,10 +5,13 @@
   
   <title>商品一覧</title>
   <link rel="stylesheet" href="<?php print(STYLESHEET_PATH . 'index.css'); ?>">
+  <style>
+    
+  </style>
 </head>
 <body>
   <?php include VIEW_PATH . 'templates/header_logined.php'; ?>
-  
+
 
   <div class="container">
     <h1>商品一覧</h1>
@@ -49,7 +52,22 @@
       <?php } ?>
       </div>
     </div>
+    <p><?php print($count_items); ?>件中
+<?php print($page * 8 - 7); ?>-<?php print($page * 8); ?>件目の商品  
+    </p>
+    <ul class="page">
+<?php if($page >= 2){ ?>
+      <li><a href=?page=<?php print($page - 1); ?>>前へ</a></li>
+<?php } ?>
+      <li><a href=?page=1 class="<?php if($page == 1 || $page === ''){print('blue');} ?>">1</a></li>
+<?php for($i = 2; $total_page >= $i; $i++){ ?>
+      <li><a href=?page=<?php print($i); ?> class="<?php if($page == $i){print('blue');} ?>"><?php print($i); ?></a></li>
+<?php } ?>
+<?php if($total_page > $page || $page === ''){ ?>      
+      <li><a href=?page=<?php print($page + 1); ?>>次へ</a></li>
+<?php } ?>
+    </ul>
   </div>
-  
+
 </body>
 </html>

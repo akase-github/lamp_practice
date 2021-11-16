@@ -22,7 +22,23 @@ function get_item($db, $item_id){
   return fetch_query($db, $sql, array($item_id));
 }
 
-function get_items($db, $is_open = false, $sort){
+function get_items_admin($db){
+  $sql = '
+    SELECT
+      item_id, 
+      name,
+      stock,
+      price,
+      image,
+      status
+    FROM
+      items
+  ';
+
+  return fetch_all_query($db, $sql);
+}
+
+function get_items($db, $is_open = false, $sort, $page){
   $sql = '
     SELECT
       item_id, 
@@ -56,15 +72,27 @@ function get_items($db, $is_open = false, $sort){
     ';
   }
 
+  $page = ($page - 1) * 8;
+
+  if($page === 0){
+    $sql .='
+      LIMIT 8
+    ';
+  }else{
+    $sql .="
+      LIMIT {$page}, 8
+    ";
+  }
+
   return fetch_all_query($db, $sql);
 }
 
 function get_all_items($db){
-  return get_items($db);
+  return get_items_admin($db);
 }
 
-function get_open_items($db, $sort){
-  return get_items($db, true, $sort);
+function get_open_items($db, $sort, $page){
+  return get_items($db, true, $sort, $page);
 }
 
 function regist_item($db, $name, $price, $stock, $status, $image){
@@ -221,4 +249,15 @@ function is_valid_item_status($status){
     $is_valid = false;
   }
   return $is_valid;
+}
+
+function count_items($db){
+  $sql ='
+    SELECT
+      COUNT(*)
+    FROM
+      items
+  ';
+
+  return fetch_query($db, $sql);
 }
